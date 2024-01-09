@@ -11,9 +11,9 @@ public class ConsoleModeHandler {
         this.generator = generator;
     }
 
-    public String generateTemplateFromConsole(BufferedReader reader) throws IOException {
+    public void generateTemplateFromConsole(BufferedReader reader) throws IOException {
         System.out.println("Enter variable values in the format key1 value1 key2 value2 ...");
-        String[] keyValuePairs = reader.readLine().split(" ");
-        return generator.generateTemplate(keyValuePairs);
+        var keyValuePairs = reader.readLine().split(" ");
+        System.out.println("Result Template: " + generator.generateTemplate(keyValuePairs));
     }
 }
