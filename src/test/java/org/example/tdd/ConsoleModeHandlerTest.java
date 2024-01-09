@@ -1,5 +1,7 @@
-package org.example;
+package org.example.tdd;
 
+import org.example.ConsoleModeHandler;
+import org.example.EmailTemplateGenerator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

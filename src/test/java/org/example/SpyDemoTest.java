@@ -1,25 +1,24 @@
 package org.example;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.ReflectionUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileWriter;
 
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 
-public class FileModeHandlerTest {
-    @Mock
+public class SpyDemoTest {
+    @Spy
     private EmailTemplateGenerator generator;
     @Mock
     private BufferedReader bufferedReader;
-    @Mock
-    private FileReader fileReader;
     @Mock
     private FileWriter fileWriter;
 
@@ -32,8 +31,12 @@ public class FileModeHandlerTest {
     }
 
     @Test
-    public void generateTemplateFromFileShouldWriteToOutputFile() throws Exception {
-        when(generator.generateTemplate("name", "John", "order", "12345")).thenReturn("Hello John, your order is 12345");
+    public void generateTemplateFromFileShouldCallRealTemplateGeneratorMethodSuccess() throws Exception {
+        var templateField = ReflectionUtils.findFields(EmailTemplateGenerator.class, f -> f.getName().equals("template"),
+                ReflectionUtils.HierarchyTraversalMode.TOP_DOWN).get(0);
+        templateField.setAccessible(true);
+        templateField.set(generator, "Hello #{name}, your order is #{order}");
+
         when(bufferedReader.readLine()).thenReturn("name John order 12345");
         doNothing().when(fileWriter).write("Hello John, your order is 12345");
 

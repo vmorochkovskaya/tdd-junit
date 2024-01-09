@@ -8,13 +8,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EmailTemplateGenerator {
-    private final String template;
+    private String template;
+
+    public EmailTemplateGenerator() {
+    }
 
     public EmailTemplateGenerator(String template) {
         this.template = template;
     }
 
     public String generateTemplate(String... keyValuePairs) {
+        System.out.println("Generate email template is being called");
+
         var variables = extractVariables(template);
         var values = new HashMap<String, String>();
 
